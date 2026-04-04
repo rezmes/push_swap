@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/26 12:04:57 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/03 20:11:25 by mmesgari         ###   ########.fr       */
+/*   Created: 2026/04/04 19:38:38 by mmesgari          #+#    #+#             */
+/*   Updated: 2026/04/04 20:01:12 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	count_words(char const *s, char c)
+static int	count_words(char const *s, char c)
 {
 	int	i;
 	int	w;
@@ -35,7 +35,7 @@ int	count_words(char const *s, char c)
 	return (w);
 }
 
-char	*add(char const *s, char c)
+static char	*add(char const *s, char c)
 {
 	int		len;
 	int		i;
@@ -57,38 +57,37 @@ char	*add(char const *s, char c)
 	return (w);
 }
 
-void	free_words(char **r, int j)
+static int	process_word(char **r, char const *s, char c, int *j)
 {
-	while (j > 0)
+	r[*j] = add(s, c);
+	if (!r[*j])
 	{
-		j--;
-		free(r[j]);
+		free_split(r);
+		return (0);
 	}
-	free(r);
+	(*j)++;
+	return (1);
 }
 
-int	split_fill(char **r, char const *s, char c)
+static int	split_fill(char **r, char const *s, char c)
 {
 	int	i;
 	int	j;
 	int	in;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	in = 0;
-	while (s[i])
+	while (s[++i])
 	{
 		if (s[i] != c && !in)
 		{
-			r[j] = add(&s[i], c);
-			if (!r[j])
-				return (free_words(r, j), 0);
+			if (!process_word(r, &s[i], c, &j))
+				return (0);
 			in = 1;
-			j++;
 		}
-		if (s[i] == c)
+		else if (s[i] == c)
 			in = 0;
-		i++;
 	}
 	r[j] = NULL;
 	return (1);

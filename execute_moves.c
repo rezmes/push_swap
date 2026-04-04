@@ -5,15 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/03 19:37:52 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/03 19:38:22 by mmesgari         ###   ########.fr       */
+/*   Created: 2026/04/04 19:55:50 by mmesgari          #+#    #+#             */
+/*   Updated: 2026/04/04 20:48:55 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <limits.h> // for INT_MAX
 
-// 1. Find the node with the cheapest total cost
 t_stack_node	*get_cheapest(t_stack_node *stack)
 {
 	t_stack_node	*cheapest_node;
@@ -23,13 +21,10 @@ t_stack_node	*get_cheapest(t_stack_node *stack)
 	if (!stack)
 		return (NULL);
 	cheapest_value = INT_MAX;
+	cheapest_node = stack;
 	while (stack)
 	{
-		// To get absolute value without math.h, we check if < 0
-		int cost_a = stack->cost_a < 0 ? stack->cost_a * -1 : stack->cost_a;
-		int cost_b = stack->cost_b < 0 ? stack->cost_b * -1 : stack->cost_b;
-		current_cost = cost_a + cost_b;
-
+		current_cost = calculate_total_cost(stack->cost_a, stack->cost_b);
 		if (current_cost < cheapest_value)
 		{
 			cheapest_value = current_cost;
@@ -40,7 +35,8 @@ t_stack_node	*get_cheapest(t_stack_node *stack)
 	return (cheapest_node);
 }
 
-void	execute_rotations(t_stack_node **a, t_stack_node **b, t_stack_node *cheapest)
+void	execute_rotations(t_stack_node **a, t_stack_node **b,
+			t_stack_node *cheapest)
 {
 	while (cheapest->cost_a > 0 && cheapest->cost_b > 0)
 	{
@@ -62,7 +58,6 @@ void	move_a_to_b(t_stack_node **a, t_stack_node **b)
 
 	cheapest_node = get_cheapest(*a);
 	execute_rotations(a, b, cheapest_node);
-
 	while (cheapest_node->cost_a > 0)
 	{
 		ra(a);
@@ -73,7 +68,6 @@ void	move_a_to_b(t_stack_node **a, t_stack_node **b)
 		rra(a);
 		cheapest_node->cost_a++;
 	}
-
 	while (cheapest_node->cost_b > 0)
 	{
 		rb(b);
@@ -84,6 +78,34 @@ void	move_a_to_b(t_stack_node **a, t_stack_node **b)
 		rrb(b);
 		cheapest_node->cost_b++;
 	}
-
 	pb(b, a);
+}
+
+void	move_b_to_a(t_stack_node **a, t_stack_node **b)
+{
+	t_stack_node	*cheapest_node;
+
+	cheapest_node = get_cheapest(*b);
+	execute_rotations(a, b, cheapest_node);
+	while (cheapest_node->cost_a > 0)
+	{
+		ra(a);
+		cheapest_node->cost_a--;
+	}
+	while (cheapest_node->cost_a < 0)
+	{
+		rra(a);
+		cheapest_node->cost_a++;
+	}
+	while (cheapest_node->cost_b > 0)
+	{
+		rb(b);
+		cheapest_node->cost_b--;
+	}
+	while (cheapest_node->cost_b < 0)
+	{
+		rrb(b);
+		cheapest_node->cost_b++;
+	}
+	pa(a, b);
 }

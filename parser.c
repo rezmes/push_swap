@@ -5,30 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/03 19:45:16 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/03 20:08:29 by mmesgari         ###   ########.fr       */
+/*   Created: 2026/04/04 19:40:11 by mmesgari          #+#    #+#             */
+/*   Updated: 2026/04/04 20:48:04 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include <limits.h>
 
-// 1. Check if the string is a valid number (no letters, correct signs)
 static int	syntax_error(char *str)
 {
-	if (!(*str == '+' || *str == '-' || (*str >= '0' && *str <= '9')))
-		return (1);
+	int	len;
+
+	len = 0;
 	if ((*str == '+' || *str == '-') && !(str[1] >= '0' && str[1] <= '9'))
 		return (1);
-	while (*++str)
+	if (*str == '+' || *str == '-')
+		str++;
+	while (*str == '0')
+		str++;
+	while (*str)
 	{
 		if (!(*str >= '0' && *str <= '9'))
 			return (1);
+		len++;
+		str++;
 	}
-	return (0);
+	return (len > 10);
 }
 
-// 2. Check if the number already exists in the stack
 static int	duplicate_error(t_stack_node *a, int n)
 {
 	if (!a)
@@ -42,7 +46,6 @@ static int	duplicate_error(t_stack_node *a, int n)
 	return (0);
 }
 
-// 3. Create a new node and add it to the bottom of Stack A
 static void	append_node(t_stack_node **stack, int n)
 {
 	t_stack_node	*node;
@@ -68,29 +71,47 @@ static void	append_node(t_stack_node **stack, int n)
 	}
 }
 
-// 4. The main parsing function
+static void	process_split(t_stack_node **a, char **split)
+{
+	int		j;
+	long	n;
+
+	j = 0;
+	while (split[j])
+	{
+		if (syntax_error(split[j]))
+		{
+			free_split(split);
+			error_exit(a);
+		}
+		n = ft_atol(split[j]);
+		if (n > INT_MAX || n < INT_MIN || duplicate_error(*a, (int)n))
+		{
+			free_split(split);
+			error_exit(a);
+		}
+		append_node(a, (int)n);
+		j++;
+	}
+}
+
 void	init_stack_a(t_stack_node **a, char **argv)
 {
-	long	n;
 	int		i;
+	char	**split;
 
 	i = 0;
-	while (argv[i]) // Loop through each argument
+	while (argv[i])
 	{
-		// Note: If you used ft_split, argv[i] is already a single string number.
-		if (syntax_error(argv[i]))
+		split = ft_split(argv[i], ' ');
+		if (!split || !split[0])
+		{
+			if (split)
+				free_split(split);
 			error_exit(a);
-		
-		// Convert string to long to check for integer overflow
-		n = ft_atol(argv[i]); // You need to implement ft_atol (like atoi but returns long)
-		
-		if (n > INT_MAX || n < INT_MIN)
-			error_exit(a);
-		if (duplicate_error(*a, (int)n))
-			error_exit(a);
-		
-		// If it passed all checks, add it to the stack
-		append_node(a, (int)n);
+		}
+		process_split(a, split);
+		free_split(split);
 		i++;
 	}
 }
