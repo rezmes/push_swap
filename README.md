@@ -34,3 +34,6 @@ Resources
 Algorithm Logic: The sorting structure is based on the Turk Algorithm concept, which prioritizes dynamic cost calculation over hardcoded chunking methods.
 
 Tools: Occasional use of AI tools strictly for interpreting ld linker errors and referencing 42's Norminette formatting rules.
+
+
+ARG=$(shuf -i 0-500 -n 500 | tr '\n' ' '); ./push_swap $ARG | ./checker_linux $ARG
