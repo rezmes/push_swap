@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 19:55:22 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/15 21:27:39 by mmesgari         ###   ########.fr       */
+/*   Created: 2026/04/15 22:13:00 by mmesgari          #+#    #+#             */
+/*   Updated: 2026/04/15 22:32:59 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+#include "get_next_line_bonus.h"
 
 int	is_sorted(t_stack_node *stack)
 {
@@ -27,23 +28,27 @@ int	is_sorted(t_stack_node *stack)
 
 int	main(int argc, char **argv)
 {
-	t_stack_node	*stack_a;
-	t_stack_node	*stack_b;
+	t_stack_node	*a;
+	t_stack_node	*b;
+	char			*line;
 
-	stack_a = NULL;
-	stack_b = NULL;
+	a = NULL;
+	b = NULL;
 	if (argc == 1)
 		return (0);
-	init_stack_a(&stack_a, argv + 1);
-	if (!is_sorted(stack_a))
+	init_stack_a(&a, argv + 1);
+	line = get_next_line(0);
+	while (line)
 	{
-		if (stack_len(stack_a) == 2)
-			sa(&stack_a, 1);
-		else if (stack_len(stack_a) == 3)
-			sort_three(&stack_a);
-		else
-			turk_sort(&stack_a, &stack_b);
+		execute_instruction(line, &a, &b);
+		free(line);
+		line = get_next_line(0);
 	}
-	free_stack(&stack_a);
+	if (is_sorted(a) && !b)
+		write(1, "OK\n", 3);
+	else
+		write(1, "KO\n", 3);
+	free_stack(&a);
+	free_stack(&b);
 	return (0);
 }

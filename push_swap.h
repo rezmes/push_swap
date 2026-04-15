@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 19:41:07 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/04 19:41:11 by mmesgari         ###   ########.fr       */
+/*   Updated: 2026/04/15 22:35:04 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ typedef struct s_stack_node
 }	t_stack_node;
 
 // Operations
-void			sa(t_stack_node **a);
-void			pa(t_stack_node **a, t_stack_node **b);
-void			pb(t_stack_node **b, t_stack_node **a);
-void			ra(t_stack_node **a);
-void			rb(t_stack_node **b);
-void			rr(t_stack_node **a, t_stack_node **b);
-void			rra(t_stack_node **a);
-void			rrb(t_stack_node **b);
-void			rrr(t_stack_node **a, t_stack_node **b);
+void	sa(t_stack_node **a, int print);
+void	pa(t_stack_node **a, t_stack_node **b, int print);
+void	pb(t_stack_node **b, t_stack_node **a, int print);
+void	ra(t_stack_node **a, int print);
+void	rb(t_stack_node **b, int print);
+void	rr(t_stack_node **a, t_stack_node **b, int print);
+void	rra(t_stack_node **a, int print);
+void	rrb(t_stack_node **b, int print);
+void	rrr(t_stack_node **a, t_stack_node **b, int print);
+void	sb(t_stack_node **b, int print);
+void	ss(t_stack_node **a, t_stack_node **b, int print);
 
 // Utils
 t_stack_node	*find_last_node(t_stack_node *stack);
@@ -75,6 +77,8 @@ void			move_a_to_b(t_stack_node **a, t_stack_node **b);
 void			move_b_to_a(t_stack_node **a, t_stack_node **b);
 void			align_stack(t_stack_node **a);
 void			update_indexes(t_stack_node *a, t_stack_node *b);
+
+void	execute_instruction(char *line, t_stack_node **a, t_stack_node **b);
 
 int				is_sorted(t_stack_node *stack);
 

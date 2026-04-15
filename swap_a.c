@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   swap_a.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 20:26:15 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/04 20:26:18 by mmesgari         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:18:40 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	sa(t_stack_node **stack_a)
+void	sa(t_stack_node **stack_a, int print)
 {
 	t_stack_node	*first;
 	t_stack_node	*second;
@@ -28,10 +28,11 @@ void	sa(t_stack_node **stack_a)
 	second->next = first;
 	first->prev = second;
 	*stack_a = second;
-	write(1, "sa\n", 3);
+	if (print)
+		write(1, "sa\n", 3);
 }
 
-void	ra(t_stack_node **stack_a)
+void	ra(t_stack_node **stack_a, int print)
 {
 	t_stack_node	*first_node;
 	t_stack_node	*last_node;
@@ -45,10 +46,11 @@ void	ra(t_stack_node **stack_a)
 	last_node->next = first_node;
 	first_node->prev = last_node;
 	first_node->next = NULL;
-	write(1, "ra\n", 3);
+	if (print)
+		write(1, "ra\n", 3);
 }
 
-void	rra(t_stack_node **stack_a)
+void	rra(t_stack_node **stack_a, int print)
 {
 	t_stack_node	*last_node;
 
@@ -60,10 +62,11 @@ void	rra(t_stack_node **stack_a)
 	last_node->prev = NULL;
 	(*stack_a)->prev = last_node;
 	*stack_a = last_node;
-	write(1, "rra\n", 4);
+	if (print)
+		write(1, "rra\n", 4);
 }
 
-void	pa(t_stack_node **stack_a, t_stack_node **stack_b)
+void	pa(t_stack_node **stack_a, t_stack_node **stack_b, int print)
 {
 	t_stack_node	*node_to_push;
 
@@ -85,5 +88,6 @@ void	pa(t_stack_node **stack_a, t_stack_node **stack_b)
 		(*stack_a)->prev = node_to_push;
 		*stack_a = node_to_push;
 	}
-	write(1, "pa\n", 3);
+	if (print)
+		write(1, "pa\n", 3);
 }

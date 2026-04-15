@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tiny_sort.c                                        :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/04 19:41:26 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/15 21:27:16 by mmesgari         ###   ########.fr       */
+/*   Created: 2023/11/01 10:00:00 by mmesgari          #+#    #+#             */
+/*   Updated: 2026/01/08 12:50:18 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	sort_three(t_stack_node **stack_a)
-{
-	t_stack_node	*highest_node;
+# include <stdlib.h>
+# include <unistd.h>
+// #include <stdio.h>
+# include <fcntl.h>
 
-	highest_node = find_highest(*stack_a);
-	if (*stack_a == highest_node)
-		ra(stack_a, 1);
-	else if ((*stack_a)->next == highest_node)
-		rra(stack_a, 1);
-	if ((*stack_a)->value > (*stack_a)->next->value)
-		sa(stack_a, 1);
-}
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*get_next_line(int fd);
+char	*ft_strchr(char *s, int c);
+size_t	ft_strlen(char *s);
+char	*ft_strjoin(char *s1, char *s2);
+
+#endif

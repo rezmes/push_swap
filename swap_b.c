@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   swap_b.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 20:26:26 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/04 20:26:29 by mmesgari         ###   ########.fr       */
+/*   Updated: 2026/04/15 22:06:25 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	rb(t_stack_node **stack_b)
+void	rb(t_stack_node **stack_b, int print)
 {
 	t_stack_node	*first;
 	t_stack_node	*last;
@@ -26,10 +26,11 @@ void	rb(t_stack_node **stack_b)
 	last->next = first;
 	first->prev = last;
 	first->next = NULL;
-	write(1, "rb\n", 3);
+	if (print)
+		write(1, "rb\n", 3);
 }
 
-void	rrb(t_stack_node **stack_b)
+void	rrb(t_stack_node **stack_b, int print)
 {
 	t_stack_node	*last;
 
@@ -41,10 +42,11 @@ void	rrb(t_stack_node **stack_b)
 	last->prev = NULL;
 	(*stack_b)->prev = last;
 	*stack_b = last;
-	write(1, "rrb\n", 4);
+	if (print)
+		write(1, "rrb\n", 4);
 }
 
-void	pb(t_stack_node **stack_b, t_stack_node **stack_a)
+void	pb(t_stack_node **stack_b, t_stack_node **stack_a, int print)
 {
 	t_stack_node	*node_to_push;
 
@@ -66,5 +68,26 @@ void	pb(t_stack_node **stack_b, t_stack_node **stack_a)
 		(*stack_b)->prev = node_to_push;
 		*stack_b = node_to_push;
 	}
-	write(1, "pb\n", 3);
+	if (print)
+		write(1, "pb\n", 3);
+}
+
+void	sb(t_stack_node **stack_b, int print)
+{
+	t_stack_node	*first;
+	t_stack_node	*second;
+
+	if (!*stack_b || !(*stack_b)->next)
+		return ;
+	first = *stack_b;
+	second = first->next;
+	first->next = second->next;
+	if (second->next)
+		second->next->prev = first;
+	second->prev = NULL;
+	second->next = first;
+	first->prev = second;
+	*stack_b = second;
+	if (print)
+		write(1, "sb\n", 3);
 }

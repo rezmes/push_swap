@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_moves.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 19:55:50 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/04 20:48:55 by mmesgari         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:24:41 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	execute_rotations(t_stack_node **a, t_stack_node **b,
 {
 	while (cheapest->cost_a > 0 && cheapest->cost_b > 0)
 	{
-		rr(a, b);
+		rr(a, b, 1);
 		cheapest->cost_a--;
 		cheapest->cost_b--;
 	}
 	while (cheapest->cost_a < 0 && cheapest->cost_b < 0)
 	{
-		rrr(a, b);
+		rrr(a, b, 1);
 		cheapest->cost_a++;
 		cheapest->cost_b++;
 	}
@@ -60,25 +60,25 @@ void	move_a_to_b(t_stack_node **a, t_stack_node **b)
 	execute_rotations(a, b, cheapest_node);
 	while (cheapest_node->cost_a > 0)
 	{
-		ra(a);
+		ra(a, 1);
 		cheapest_node->cost_a--;
 	}
 	while (cheapest_node->cost_a < 0)
 	{
-		rra(a);
+		rra(a, 1);
 		cheapest_node->cost_a++;
 	}
 	while (cheapest_node->cost_b > 0)
 	{
-		rb(b);
+		rb(b, 1);
 		cheapest_node->cost_b--;
 	}
 	while (cheapest_node->cost_b < 0)
 	{
-		rrb(b);
+		rrb(b, 1);
 		cheapest_node->cost_b++;
 	}
-	pb(b, a);
+	pb(b, a, 1);
 }
 
 void	move_b_to_a(t_stack_node **a, t_stack_node **b)
@@ -89,23 +89,23 @@ void	move_b_to_a(t_stack_node **a, t_stack_node **b)
 	execute_rotations(a, b, cheapest_node);
 	while (cheapest_node->cost_a > 0)
 	{
-		ra(a);
+		ra(a, 1);
 		cheapest_node->cost_a--;
 	}
 	while (cheapest_node->cost_a < 0)
 	{
-		rra(a);
+		rra(a, 1);
 		cheapest_node->cost_a++;
 	}
 	while (cheapest_node->cost_b > 0)
 	{
-		rb(b);
+		rb(b, 1);
 		cheapest_node->cost_b--;
 	}
 	while (cheapest_node->cost_b < 0)
 	{
-		rrb(b);
+		rrb(b, 1);
 		cheapest_node->cost_b++;
 	}
-	pa(a, b);
+	pa(a, b, 1);
 }

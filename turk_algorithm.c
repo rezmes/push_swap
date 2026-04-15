@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   turk_algorithm.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmesgari <mmesgari@learner.42.tech>        +#+  +:+       +#+        */
+/*   By: mmesgari <mmesgari@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 19:54:44 by mmesgari          #+#    #+#             */
-/*   Updated: 2026/04/04 20:39:29 by mmesgari         ###   ########.fr       */
+/*   Updated: 2026/04/15 21:26:39 by mmesgari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	align_stack(t_stack_node **stack_a)
 	while ((*stack_a) != smallest)
 	{
 		if (smallest->index <= len / 2)
-			ra(stack_a);
+			ra(stack_a, 1);
 		else
-			rra(stack_a);
+			rra(stack_a, 1);
 		set_current_position(*stack_a);
 		len = stack_len(*stack_a);
 	}
@@ -60,9 +60,9 @@ void	turk_sort(t_stack_node **a, t_stack_node **b)
 
 	len_a = stack_len(*a);
 	if (len_a > 3)
-		pb(b, a);
+		pb(b, a, 1);
 	if (len_a > 4)
-		pb(b, a);
+		pb(b, a, 1);
 	while (stack_len(*a) > 3)
 	{
 		update_indexes(*a, *b);
